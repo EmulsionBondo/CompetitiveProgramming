@@ -1,4 +1,4 @@
-//ベルマンフォード O(|N|+|M|)
+//ベルマンフォード O(|N||M|)
 vector<ll> dist(NMAX);
 REP(i,N) dist[i]=INF;
 dist[0]=0;
