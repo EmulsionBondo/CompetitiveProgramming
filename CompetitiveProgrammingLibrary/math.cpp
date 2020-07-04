@@ -173,18 +173,31 @@ mat mul(mat& A,mat& B){
   return C;
 }
 
+//行列の積
+mat mul(mat& A,mat& B){
+    mat C(A.size(), vec(B[0].size()));
+    for(int i=0;i<A.size();i++){
+        for(int j=0;j<B[0].size();j++){
+            for(int k=0;k<A[0].size();k++){
+                C[i][j] += A[i][k] * B[k][j];
+            }
+        }
+    }
+    return C;
+}
+
 //行列の繰り返し二乗法
-mat pow(mat A, int n){
-  mat B(A.size(),vec(A.size()));
-  for(int i=0;i<A.size();i++){
-    B[i][i]=1;
-  }
-  while(n>0){
-    if(n&1) B=mul(B,A);
-    A = mul(A,A);
-    n >>= 1;
-  }
-  return B;
+mat pow(mat A, ll n){
+    mat B(A.size(), vec(A.size()));
+    for(int i=0;i<A.size();i++){
+        B[i][i] = 1;
+    }
+    while(n > 0){
+        if(n & 1) B= mul(B, A);
+        A = mul(A, A);
+        n >>= 1;
+    }
+    return B;
 }
 
 //パスカルの三角形
