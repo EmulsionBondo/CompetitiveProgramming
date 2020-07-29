@@ -91,6 +91,10 @@ template<class T> struct BiCoef {
         if (n < k || n < 0 || k < 0) return 0;
         return fact_[n] * finv_[n-k];
     }
+    constexpr T perm(int n, int k) const noexcept {
+        if (n < k || n < 0 || k < 0) return 0;
+        return fact_[n] * finv_[n-k];
+    }
 };
 
 const int MOD = 1000000007;
