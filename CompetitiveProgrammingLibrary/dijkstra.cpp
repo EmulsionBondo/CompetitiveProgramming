@@ -1,4 +1,4 @@
-//ダイクストラ O(|M|)
+//ダイクストラ
 struct edge{ll to, cost;};
 vector<vector<edge>> G;
 
@@ -26,7 +26,6 @@ vector<ll> dijkstra(ll s,ll n,vector<vector<edge>> G){
     return d;
 }
 //-------------------------------------------------------------------------
-//ダイクストラのテンプレート（くるさんのやつ）
 //https://atcoder.jp/contests/gigacode-2019/submissions/8651446
 template<class T> class Dijkstra {
 public:
