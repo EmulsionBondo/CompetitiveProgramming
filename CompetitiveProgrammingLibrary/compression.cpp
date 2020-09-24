@@ -20,3 +20,34 @@ int compress(vector<int> &s, vector<int> &e, int D){
     }
     return arr.size();
 }
+
+template<typename T>
+struct Compress {
+	vector<T> v;
+	Compress() {}
+	Compress(vector<T> _v) :v(_v) { build(); }
+
+	void add(T x) {
+		v.emplace_back(x);
+	}
+
+	void build() {
+		sort(v.begin(), v.end());
+		v.erase(unique(v.begin(), v.end()), v.end());
+	}
+	void build(vector<T> _v) {
+		v = _v;
+		sort(v.begin(), v.end());
+		v.erase(unique(v.begin(), v.end()), v.end());
+	}
+	int get(T x) {
+		return lower_bound(v.begin(), v.end(), x) - v.begin();
+	}
+
+	T& operator[](int i) { return v[i]; }
+
+
+	int size() {
+		return (int)v.size();
+	}
+};
