@@ -4,6 +4,7 @@
 // xをyに出来ないときは -1 を返す
 // verify: https://atcoder.jp/contests/chokudai_S001/submissions/17334405
 // verify: https://codeforces.com/contest/1430/submission/95257884
+// verify: https://codeforces.com/contest/1420/submission/95259709
 template <class Abel> struct BIT {
     const Abel UNITY_SUM = 0;                       // to be set
     vector<Abel> dat;
