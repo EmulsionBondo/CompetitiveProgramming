@@ -403,3 +403,59 @@ template <typename mint> struct FPS : vector<mint> {
         return sqrt(f, f.size());
     }
 };
+
+// スパースな乗算・除算 O(size(f) * size(K))
+// Kが小さいときはこっちのほうがいい
+template<typename T>
+void mul(FPS<T> &f, vector<pair<int, T>> g){ // sparse
+    int n = f.size();
+    auto [d, c] = g.front();
+    if(d == 0) g.erase(g.begin());
+    else c = 0;
+    for(int i=n-1;i>=0;i--){
+        if(c == 0) f[i] = 0;
+        else if(c == c.getmod()-1) f[i] = -f[i];
+        else if(c != 1) f[i] *= c;
+        for(auto &[j, b] : g){
+            if(j > i) break;
+            if(b == 1) f[i] += f[i-j];
+            else if(b == b.getmod() - 1) f[i] -= f[i-j];
+            else f[i] += f[i-j] * b;
+        }
+    }
+}
+
+template<typename T>
+void div(FPS<T> &f, vector<pair<int, T>> g){ // sparse, required: g[0] != 0
+    int n = f.size();
+    auto [d, c] = g.front();
+    assert(d == 0 && c != 0);
+    T ic = modinv(c);
+    g.erase(g.begin());
+    for(int i=0;i<n;i++){
+        for (auto &[j, b] : g) {
+            if (j > i) break;
+            if      (b == 1)         f[i] -= f[i-j];
+            else if (b == b.getmod()-1) f[i] += f[i-j];
+            else                             f[i] -= f[i-j] * b;
+        }
+        if      (c == c.getmod()-1) f[i] = -f[i];
+        else if (c != 1)         f[i] *= ic;
+    }
+}
+
+template<typename T>
+void mul(FPS<T> &f, const int d, const T c){ // multiply (1 + cz^d)
+    int n = f.size();
+    if(c == 1) for(int i=n-d-1;i>=0;i--) f[i+d] += f[i];
+    else if (c == c.getmod()-1) for(int i=n-d-1;i>=0;i--) f[i+d] -= f[i];
+    else for(int i=n-d-1;i>=0;i--) f[i+d] += f[i] * c;
+}
+
+template<typename T>
+void div(FPS<T> &f, const int d, const T c){ // divide by (1 + cz^d)
+    int n = f.size();
+    if(c == 1) for(int i=0;i<n-d;i++) f[i+d] -= f[i];
+    else if (c == c.getmod()-1) for(int i=0;i<n-d;i++) f[i+d] += f[i];
+    else for(int i=0;i<n-d;i++) f[i+d] -= f[i] * c;
+}
