@@ -1,7 +1,8 @@
 //実行時にMODを受け取るmodint
-vector<int> MODS = {1000000007};
-template<int IND = 0> struct Fp{
+vector<int> MODS = { 1000000007 }; // 実行時に決まる
+template<int IND = 0> struct Fp {
     long long val;
+
     int MOD = MODS[IND];
     constexpr Fp(long long v = 0) noexcept : val(v % MODS[IND]) {
         if (val < 0) val += MOD;
@@ -47,6 +48,9 @@ template<int IND = 0> struct Fp{
     }
     friend constexpr ostream& operator << (ostream &os, const Fp<IND>& x) noexcept {
         return os << x.val;
+    }
+    friend constexpr istream& operator >> (istream &is, Fp<IND>& x) noexcept {
+        return is >> x.val;
     }
     friend constexpr Fp<IND> modpow(const Fp<IND> &a, long long n) noexcept {
         if (n == 0) return 1;
