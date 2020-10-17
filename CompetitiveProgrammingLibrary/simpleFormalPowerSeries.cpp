@@ -1,61 +1,61 @@
 // NTTを使わないFPS
 template<typename mint> struct SimpleFormalPowerSeries : std::vector<mint> {
 	using std::vector<mint>::vector;
-	using P = SimpleFormalPowerSeries;
+	using FPS = SimpleFormalPowerSeries;
 
 	void shrink() {
 		while(this->size() && this->back() == mint(0)) this->pop_back();
 	}
 
-	P operator+(const P &r) const { return P(*this) += r; }
+	FPS operator+(const FPS &r) const { return FPS(*this) += r; }
 
-	P operator+(const mint &v) const { return P(*this) += v; }
+	FPS operator+(const mint &v) const { return FPS(*this) += v; }
 
-	P operator-(const P &r) const { return P(*this) -= r; }
+	FPS operator-(const FPS &r) const { return FPS(*this) -= r; }
 
-	P operator-(const mint &v) const { return P(*this) -= v; }
+	FPS operator-(const mint &v) const { return FPS(*this) -= v; }
 
-	P operator*(const P &r) const { return P(*this) *= r; }
+	FPS operator*(const FPS &r) const { return FPS(*this) *= r; }
 
-	P operator*(const mint &v) const { return P(*this) *= v; }
+	FPS operator*(const mint &v) const { return FPS(*this) *= v; }
 
-	P operator/(const P &r) const { return P(*this) /= r; }
+	FPS operator/(const FPS &r) const { return FPS(*this) /= r; }
 
-	P operator%(const P &r) const { return P(*this) %= r; }
+	FPS operator%(const FPS &r) const { return FPS(*this) %= r; }
 
-	P &operator+=(const P &r) {
+	FPS &operator+=(const FPS &r) {
 		if(r.size() > this->size()) this->resize(r.size());
 		for(int i = 0; i < r.size(); i++) (*this)[i] += r[i];
 		return *this;
 	}
 
-	P &operator+=(const mint &r) {
+	FPS &operator+=(const mint &r) {
 		if(this->empty()) this->resize(1);
 		(*this)[0] += r;
 		return *this;
 	}
 
-	P &operator-=(const P &r) {
+	FPS &operator-=(const FPS &r) {
 		if(r.size() > this->size()) this->resize(r.size());
 		for(int i = 0; i < r.size(); i++) (*this)[i] -= r[i];
 		shrink();
 		return *this;
 	}
 
-	P &operator-=(const mint &r) {
+	FPS &operator-=(const mint &r) {
 		if(this->empty()) this->resize(1);
 		(*this)[0] -= r;
 		shrink();
 		return *this;
 	}
 
-	P &operator*=(const mint &v) {
+	FPS &operator*=(const mint &v) {
 		const int n = (int)this->size();
 		for(int k = 0; k < n; k++) (*this)[k] *= v;
 		return *this;
 	}
 
-	P &operator*=(const P &r) {
+	FPS &operator*=(const FPS &r) {
 		int n = (int)this->size();
 		int m = r.size();
 		(*this).resize(n + m - 1);
@@ -66,15 +66,15 @@ template<typename mint> struct SimpleFormalPowerSeries : std::vector<mint> {
 		return *this;
 	}
 
-	P &operator%=(const P &r) { return *this -= *this / r * r; }
+	FPS &operator%=(const FPS &r) { return *this -= *this / r * r; }
 
-	P operator-() const {
-		P ret(this->size());
+	FPS operator-() const {
+		FPS ret(this->size());
 		for(int i = 0; i < this->size(); i++) ret[i] = -(*this)[i];
 		return ret;
 	}
 
-	P &operator/=(const P &r) {  // naive
+	FPS &operator/=(const FPS &r) {  // naive
 		int n = this->size();
 		int m = r.size();
 		for(int i = 0; i < n; i++) {
@@ -84,39 +84,39 @@ template<typename mint> struct SimpleFormalPowerSeries : std::vector<mint> {
 		return *this;
 	}
 
-	P dot(P r) const {
-		P ret(std::min(this->size(), r.size()));
+	FPS dot(FPS r) const {
+		FPS ret(std::min(this->size(), r.size()));
 		for(int i = 0; i < ret.size(); i++) ret[i] = (*this)[i] * r[i];
 		return ret;
 	}
 
-	P pre(int sz) const { return P(std::begin(*this), std::begin(*this) + std::min((int)this->size(), sz)); }
+	FPS pre(int sz) const { return FPS(std::begin(*this), std::begin(*this) + std::min((int)this->size(), sz)); }
 
-	P operator>>(int sz) const {
+	FPS operator>>(int sz) const {
 		if(this->size() <= sz) return {};
-		P ret(*this);
+		FPS ret(*this);
 		ret.erase(ret.begin(), ret.begin() + sz);
 		return ret;
 	}
 
-	P operator<<(int sz) const {
-		P ret(*this);
+	FPS operator<<(int sz) const {
+		FPS ret(*this);
 		ret.insert(ret.begin(), sz, mint(0));
 		return ret;
 	}
 
-	P rev(int deg = -1) const {
-		P ret(*this);
+	FPS rev(int deg = -1) const {
+		FPS ret(*this);
 		if(deg != -1) ret.resize(deg, mint(0));
 		std::reverse(std::begin(ret), std::end(ret));
 		return ret;
 	}
 
-	P inv(int deg = -1) const {
+	FPS inv(int deg = -1) const {
 		assert(((*this)[0]) != mint(0));
 		const int n = (int)this->size();
 		if(deg == -1) deg = n;
-		P ret;
+		FPS ret;
 		ret.resize(deg);
 		ret[0] = 1;
 		return ret / (*this);
