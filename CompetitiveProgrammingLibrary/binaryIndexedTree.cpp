@@ -1,6 +1,3 @@
-//BIT(Binary Indexed Tree)
-//O(logN)でa_iにxを加算，Σ(i,k=0)a_kを求める事ができる
-//BITで転倒数を求める O(NlogN)
 template <class Abel> struct BIT {
     const Abel UNITY_SUM = 0;                       // to be set
     vector<Abel> dat;
@@ -26,6 +23,20 @@ template <class Abel> struct BIT {
     /* [a, b), a and b are 1-indexed */
     inline Abel sum(int a, int b) {
         return sum(b - 1) - sum(a - 1);
+    }
+
+    /* get k-th element (k is 0-indexed) */
+    int kth_element(long long k) {
+        ++k;
+        int res = 0;
+        int N = 1; while (N < (int)dat.size()) N *= 2;
+        for (int i = N / 2; i > 0; i /= 2) {
+            if (res + i < (int)dat.size() && dat[res + i] < k) {
+                k = k - dat[res + i];
+                res = res + i;
+            }
+        }
+        return res + 1;
     }
 
     /* debug */

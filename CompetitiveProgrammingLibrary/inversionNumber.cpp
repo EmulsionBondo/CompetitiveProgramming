@@ -32,6 +32,20 @@ template <class Abel> struct BIT {
         return sum(b - 1) - sum(a - 1);
     }
 
+    /* get k-th element (k is 0-indexed) */
+    int kth_element(long long k) {
+        ++k;
+        int res = 0;
+        int N = 1; while (N < (int)dat.size()) N *= 2;
+        for (int i = N / 2; i > 0; i /= 2) {
+            if (res + i < (int)dat.size() && dat[res + i] < k) {
+                k = k - dat[res + i];
+                res = res + i;
+            }
+        }
+        return res + 1;
+    }
+
     /* debug */
     void print() {
         for (int i = 1; i < (int)dat.size(); ++i) cout << sum(i, i + 1) << ",";
