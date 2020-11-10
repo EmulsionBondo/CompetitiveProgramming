@@ -1,3 +1,5 @@
+// verify(重複要素有り):https://yukicoder.me/submissions/578360
+// verify(重複要素なし):https://atcoder.jp/contests/arc033/submissions/17542308
 template <typename T>
 class avlTree {
 	struct node {
