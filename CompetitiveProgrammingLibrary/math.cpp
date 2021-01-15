@@ -258,3 +258,19 @@ template<class T> struct Partition {
         return P[n][k];
     }
 };
+
+// オイラーのφ関数  
+// 1~Nまでの自然数のうち、Nと互いに素なものの個数φ(N)を求める
+// φ(N) = N Π _(i=1) ^(k) (1 - p_k) （p_iはNの素因数）
+// O(√N)
+ll euler_phi(ll n){
+    ll ret = n;
+    for(ll i=2;i*i<=n;i++){
+        if(n % i == 0){
+            ret -= ret / i;
+            while(n % i == 0) n /= i;
+        }
+    }
+    if(n > 1) ret -= ret / n;
+    return ret;
+}
