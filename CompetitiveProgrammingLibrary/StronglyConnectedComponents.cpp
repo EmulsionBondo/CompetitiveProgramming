@@ -48,6 +48,12 @@ public:
         }
     }
 
+    vector<vector<int>> topological_sort(void){
+        vector<vector<int>> ret(size);
+        for(int i = 0; i < nodeNum; i++) ret[label[i]].emplace_back(i);
+        return ret;
+    }
+
     void print(void) {
         for(auto labelId:label) cout << labelId << " ";
         cout << endl;
