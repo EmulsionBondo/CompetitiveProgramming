@@ -22,7 +22,7 @@ public:
 	//[l, l + 1) が含まれるかどうか
 	bool covered(T l) { return covered(l, l + 1); }
 
-    // [l, r）が覆う区間を返す
+    // [l, r）が含まれる区間を返す
     // 存在しない場合[-TIN, -TINF）を返す
 	pair<T, T> covered_by(T l, T r) {
 		assert(l < r);
@@ -31,7 +31,7 @@ public:
 		return make_pair(-TINF, -TINF);
 	}
 
-	// [x, x+1）が覆う区間を返す
+	// [x, x+1）が含まれる区間を返す
     // 存在しない場合[-TIN, -TINF）を返す
 	pair<T, T> covered_by(T x) { return covered_by(x, x); }
 
