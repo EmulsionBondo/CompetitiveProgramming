@@ -48,7 +48,7 @@ public:
         vector<pair<int, int>> res;
         while(1){
             if(vid[u] > vid[v]) swap(u, v);
-            res.emplace_back(vid[head[v]], vid[v] + 1);
+            res.emplace_back(max(vid[head[v]], vid[u]), vid[v] + 1);
             if(head[u] != head[v]) v = par[head[v]];
             else break;
         }
