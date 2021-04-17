@@ -3,6 +3,7 @@
 // 辺属性のときのセグ木の初期化はseg.set(max(hld.vid[a], hld.vid[b]), x)
 // verify（部分木頂点属性） :https://atcoder.jp/contests/abc187/submissions/19367612
 // verify（パス辺属性）:https://atcoder.jp/contests/past202004-open/submissions/19367728
+// verify（パス頂点属性）：https://yukicoder.me/submissions/648187
 class HLD{
     void dfs_sz(int v, int p){
         if(g[v].size() and g[v][0] == p) swap(g[v][0], g[v].back());
