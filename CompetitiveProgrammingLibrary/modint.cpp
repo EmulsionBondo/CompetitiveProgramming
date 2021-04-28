@@ -71,7 +71,7 @@ template<int MOD> struct Fp {
 };
 
 // 二項係数ライブラリ
-// verify（Lucasの定理） : https://atcoder.jp/contests/arc117/submissions/22132679
+// verify（Lucasの定理） : https://atcoder.jp/contests/arc117/submissions/22133122
 template<class T> struct BiCoef {
     vector<T> fact_, inv_, finv_;
     constexpr BiCoef() {}
