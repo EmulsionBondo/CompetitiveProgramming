@@ -71,6 +71,7 @@ template<int MOD> struct Fp {
 };
 
 // 二項係数ライブラリ
+// verify（Lucasの定理） : https://atcoder.jp/contests/arc117/submissions/22132679
 template<class T> struct BiCoef {
     vector<T> fact_, inv_, finv_;
     constexpr BiCoef() {}
@@ -86,9 +87,28 @@ template<class T> struct BiCoef {
             finv_[i] = finv_[i-1] * inv_[i];
         }
     }
-    constexpr T com(int n, int k) const noexcept {
+    constexpr T nCr(int n, int k) const noexcept {
         if (n < k || n < 0 || k < 0) return 0;
-        return fact_[n] * finv_[k] * finv_[n-k];
+        int MOD = fact_[0].getmod();
+        if(n < MOD) return fact_[n] * finv_[k] * finv_[n-k];
+
+        // Lucasの定理
+        T ret = 1;
+        while(n || k){
+            int _n = n % MOD, _k = k % MOD;
+            n /= MOD;
+            k /= MOD;
+            ret *= nCr(_n, _k);
+        }
+        return ret;
+    }
+    constexpr T nPr(int n, int k) const noexcept {
+        if (n < k || n < 0 || k < 0) return 0;
+        return fact_[n] * finv_[n-k];
+    }
+    constexpr T nHr(int n, int k) const noexcept {
+        if (n < k || n < 0 || k < 0) return 0;
+        return fact_[n] * finv_[n-k];
     }
     constexpr T fact(int n) const noexcept {
         if (n < 0) return 0;
@@ -101,14 +121,6 @@ template<class T> struct BiCoef {
     constexpr T finv(int n) const noexcept {
         if (n < 0) return 0;
         return finv_[n];
-    }
-    constexpr T perm(int n, int k) const noexcept {
-        if (n < k || n < 0 || k < 0) return 0;
-        return fact_[n] * finv_[n-k];
-    }
-    constexpr T perm(int n, int k) const noexcept {
-        if (n < k || n < 0 || k < 0) return 0;
-        return fact_[n] * finv_[n-k];
     }
 };
 
