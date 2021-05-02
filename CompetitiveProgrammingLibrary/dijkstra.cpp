@@ -26,7 +26,7 @@ vector<ll> dijkstra(ll s,ll n,vector<vector<edge>> G){
     return d;
 }
 //-------------------------------------------------------------------------
-//https://atcoder.jp/contests/gigacode-2019/submissions/8651446
+// verify: https://atcoder.jp/contests/gigacode-2019/submissions/22250800
 template<class T> class Dijkstra {
 public:
 	int N;
@@ -52,6 +52,7 @@ public:
 			T v = pq.top().first;
 			int from = pq.top().second;
 			pq.pop();
+			if(cost[from] < v) continue;
 			for (auto u : edge[from]) {
 				T w = v + u.first;
 				int to = u.second;
